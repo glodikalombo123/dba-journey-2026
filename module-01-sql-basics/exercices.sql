@@ -79,3 +79,56 @@ SELECT auteur, COUNT(*)
 FROM livres 
 GROUP BY auteur
 HAVING COUNT(*) > 1;
+
+-- =========================================
+-- Module 1 : SQL Fundamentals (JOIN)
+-- =========================================
+
+-- Création de la table auteurs
+CREATE TABLE auteurs (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    nationalite VARCHAR(50)
+);
+
+INSERT INTO auteurs (nom, nationalite)
+VALUES 
+    ('Frank Herbert', 'Américaine'),
+    ('George Orwell', 'Britannique'),
+    ('Isaac Asimov', 'Américaine'),
+    ('Aldous Huxley', 'Britannique');
+
+-- Ajout de la clé étrangère dans livres
+ALTER TABLE livres ADD COLUMN auteur_id INT REFERENCES auteurs(id);
+
+-- Liaison des livres à leurs auteurs
+UPDATE livres SET auteur_id = 1 WHERE id = 1;
+UPDATE livres SET auteur_id = 2 WHERE id = 2;
+UPDATE livres SET auteur_id = 3 WHERE id = 3;
+UPDATE livres SET auteur_id = 4 WHERE id = 4;
+UPDATE livres SET auteur_id = 3 WHERE id = 5;
+
+-- INNER JOIN : livres + infos auteur
+SELECT livres.titre, auteurs.nom, auteurs.nationalite
+FROM livres
+JOIN auteurs ON livres.auteur_id = auteurs.id;
+
+-- Filtrer sur une table jointe
+SELECT livres.titre, auteurs.nom
+FROM livres
+JOIN auteurs ON livres.auteur_id = auteurs.id
+WHERE auteurs.nationalite = 'Américaine';
+
+-- Livre sans auteur relié (pour illustrer INNER vs LEFT JOIN)
+INSERT INTO livres (titre, auteur, annee_publication)
+VALUES ('Livre Mystère', 'Auteur Inconnu', 2020);
+
+-- INNER JOIN : exclut "Livre Mystère" (pas de correspondance)
+SELECT livres.titre, auteurs.nom
+FROM livres
+JOIN auteurs ON livres.auteur_id = auteurs.id;
+
+-- LEFT JOIN : garde "Livre Mystère" avec nom = NULL
+SELECT livres.titre, auteurs.nom
+FROM livres
+LEFT JOIN auteurs ON livres.auteur_id = auteurs.id;

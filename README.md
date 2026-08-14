@@ -5,7 +5,7 @@ Ma progression vers le métier de DBA/DBRE moderne — SQL, PostgreSQL, Docker, 
 ## Progression
 
 - [x] Module 0 — Fondations : concepts BDD, Docker installé, PostgreSQL 18 lancé en conteneur, 1ère requête SQL exécutée ✅
-- [ ] Module 1 — SQL fundamentals
+- [x] Module 1 — SQL fundamentals
 - [ ] Module 2 — Modélisation de données
 - [ ] Module 3 — Administration PostgreSQL
 - [ ] Module 4 — Performance & Optimisation
@@ -15,3 +15,8 @@ Ma progression vers le métier de DBA/DBRE moderne — SQL, PostgreSQL, Docker, 
 - [ ] Module 8 — Automatisation & IA
 - [ ] Module 9 — Sécurité
 - [ ] Module 10 — Projet final
+
+## Notes techniques
+
+- Base de travail dédiée : `dba_journey` (séparée de la base système `postgres`)
+- Script SQL rejouable intégralement via `\i` depuis `docker cp` + `psql`
